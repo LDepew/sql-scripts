@@ -100,5 +100,12 @@ constraint requestId_productId unique (requestId, productId)
 insert Lineitems
 (requestId, productId, quantity)
 values
-( (select id from requests where id =1), (select id from products where partNumber = 'BPPEN'), 3),
+( (select id from requests where id = 1), (select id from products where partNumber = 'BPPEN'), 3),
 ( (select id from requests where id = 1), (select id from products where partNumber = 'CHVNIR'), 2);
+
+use prsdb;
+-- transaction
+start transaction;
+update Lineitems set quantity = quantity + 1 where id > 0;
+commit;
+select * from Lineitems;
